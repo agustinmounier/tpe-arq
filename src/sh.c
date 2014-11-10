@@ -65,7 +65,9 @@ int getComand(char * query, char * comand){
 	comand[i] = '\0';
 	
 	if((comandIndex = isComand(comand)) != -1){
-		printIDT();
+		/*set_speaker_frec(1000);
+		play_speaker(10);*/
+		print_BIOS_info();
 	}else
 		return 0;
 	return 1;

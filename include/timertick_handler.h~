@@ -2,6 +2,6 @@
 #define _timertick_
 
 void int_08();
-int getTicks();
+int getTicks()
 
 #endif

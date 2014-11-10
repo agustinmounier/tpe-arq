@@ -18,8 +18,6 @@ void k_clear_screen()
 		vidmem[i]=WHITE_TXT;
 		i++;
 	};
-	vidmem[0] = '$';
-	vidmem[2] = ':';
 }
 
 /***************************************************************
@@ -40,6 +38,13 @@ void setup_IDT_entry (DESCR_INT *item, byte selector, dword offset, byte access,
   item->offset_h = offset >> 16;
   item->access = access;
   item->cero = cero;
+}
+
+
+void wait(int time){
+
+	
+
 }
 
 

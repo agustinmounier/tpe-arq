@@ -1,7 +1,13 @@
 #include "../include/timertick_handler.h"
 
-static int tickpos=640;
+
+static int ticks = 0;
+
 
 void int_08(){
+	ticks++;
+}
 
+int getTicks(){
+	return ticks;
 }

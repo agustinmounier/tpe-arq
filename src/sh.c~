@@ -4,10 +4,6 @@
 #include "../include/keyboard_handler.h"
 #include "../include/software.h"
 
-
-
-
-
 static char query[SH_BUFFER_SIZE];
 static shComand comands[] = {{"clear"},{"infoidt"}};
 static char comand[10];
@@ -69,7 +65,8 @@ int getComand(char * query, char * comand){
 	comand[i] = '\0';
 	
 	if((comandIndex = isComand(comand)) != -1){
-		printIDT();
+		/*set_speaker_frec(1000);
+		play_speaker(10);*/
 	}else
 		return 0;
 	return 1;
