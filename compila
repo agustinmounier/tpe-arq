@@ -1,0 +1,24 @@
+cd ./bin
+rm -rf *
+
+nasm -f aout ../src/libasm.asm -o libasm.o
+nasm -f aout ../src/loader.asm -o kstart.o
+
+gcc -c ../src/kernel.c -o kernel.o -fno-builtin
+gcc -c ../src/libc.c  -o libc.o -fno-builtin
+gcc -c ../src/timertick_handler.c  -o timertick_handler.o -fno-builtin
+gcc -c ../src/keyboard_handler.c  -o keyboard_handler.o -fno-builtin
+gcc -c ../src/video_handler.c  -o video_handler.o -fno-builtin
+gcc -c ../src/terminal.c  -o terminal.o -fno-builtin
+gcc -c ../src/buffer.c  -o buffer.o -fno-builtin
+gcc -c ../src/lib.c  -o lib.o -fno-builtin
+gcc -c ../src/syscall_hand.c  -o syscall_hand.o -fno-builtin
+gcc -c ../src/stdlib.c  -o stdlib.o -fno-builtin -fno-stack-protector
+gcc -c ../src/stdio.c  -o stdio.o -fno-builtin -fno-stack-protector
+gcc -c ../src/sh.c  -o sh.o -fno-builtin
+gcc -c ../src/io.c  -o io.o -fno-builtin
+
+gcc -c ../src/software/clear.c  -o clear.o -fno-builtin
+gcc -c ../src/software/infoIDT.c  -o infoIDT.o -fno-builtin
+
+ld -T ../src/link.ld -o kernel.bin kernel.o kstart.o libc.o libasm.o timertick_handler.o keyboard_handler.o video_handler.o terminal.o buffer.o lib.o syscall_hand.o stdlib.o stdio.o sh.o io.o clear.o infoIDT.o

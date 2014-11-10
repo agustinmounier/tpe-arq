@@ -1,0 +1,7 @@
+#ifndef _common_
+#define _common_
+
+#define ASCII_BACKSPACE		8
+#define ASCII_ENTER		10
+
+#endif
