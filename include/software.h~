@@ -2,15 +2,13 @@
 #define _software_
 
 #define CLEAR_FUNC -10
+#define INFO_IDT -11
 #include "defs.h"
 
 int clear_func();
 void printIDT();
 void printINTinfo(DESCR_INT * inter);
-void set_speaker_frec(int frec);
-void play_speaker(int ms);
-void stop_speaker();
-void wait(int ms);
-void print_BIOS_info()
+void monkey_island_theme();
+void print_BIOS_info();
 
 #endif

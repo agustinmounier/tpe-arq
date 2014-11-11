@@ -86,5 +86,4 @@ int write_to_terminal(char * buffer, int cant){
 			
 	}
 	return i;
-
 }

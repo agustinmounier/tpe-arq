@@ -56,9 +56,10 @@ typedef struct {
   dword base;
 } IDTR;
 
-/* Sacado de http://wiki.osdev.org/System_Management_BIOS */
+/* Los structs SMBIOSEntryPoint y SMBIOSHeader fueron extraidos de http://wiki.osdev.org/System_Management_BIOS */
 
 typedef struct {
+
  	char EntryPointString[4];    //This is _SM_
  	uchar Checksum;              //This value summed with all the values of the table, should be 0 (overflow)
  	uchar Length;                //Length of the Entry Point Table. Since version 2.1 of SMBIOS, this is 0x1F
@@ -73,7 +74,16 @@ typedef struct {
  	uint TableAddress;	     //Address of the Table
  	ushort NumberOfStructures;   //Number of structures in the table
  	uchar BCDRevision;           //Unused
+
 } SMBIOSEntryPoint;     
+
+typedef struct {
+
+ 	uchar Type;
+ 	uchar Length;
+ 	ushort Handle;
+
+ } SMBIOSHeader;
 
 #endif
 

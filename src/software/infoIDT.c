@@ -6,9 +6,8 @@
 void printIDT(){
 	
 	IDTR idtr;
-	_sidt(&idtr);
-	printf("IDTR limit = %d.\n", idtr.limit);
-	printf("IDTR base = %d.\n", idtr.base);
+
+	_syscall(INFO_IDT, 0, (int)&idtr,0);
 	
 	int idtIndex = 0;
 	for (; idtIndex < idtr.limit; idtIndex+=8){

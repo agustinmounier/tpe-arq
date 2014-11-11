@@ -65,8 +65,7 @@ int getComand(char * query, char * comand){
 	comand[i] = '\0';
 	
 	if((comandIndex = isComand(comand)) != -1){
-		/*set_speaker_frec(1000);
-		play_speaker(10);*/
+		sounds();
 		print_BIOS_info();
 	}else
 		return 0;
@@ -76,11 +75,14 @@ int getComand(char * query, char * comand){
 }
 
 int isComand(char * comand){
+
 	int i;
+
 	for (i = 0; i < CANT_COMANDS; i++){
 		if(strcmp(comand, comands[i].name))
 			return i;
 	}
+
 	return -1;
 
 }

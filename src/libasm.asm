@@ -180,7 +180,7 @@ _int_80_hand:
 	pop 	edx
 	
 	leave
-	ret
+	iret
 
 _syscall:
 	push 	ebp

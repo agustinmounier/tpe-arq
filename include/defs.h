@@ -56,7 +56,7 @@ typedef struct {
   dword base;
 } IDTR;
 
-/* Sacado de http://wiki.osdev.org/System_Management_BIOS */
+/* Los structs SMBIOSEntryPoint y SMBIOSHeader fueron extraidos de http://wiki.osdev.org/System_Management_BIOS */
 
 typedef struct {
 
@@ -76,6 +76,14 @@ typedef struct {
  	uchar BCDRevision;           //Unused
 
 } SMBIOSEntryPoint;     
+
+typedef struct {
+
+ 	uchar Type;
+ 	uchar Length;
+ 	ushort Handle;
+
+} SMBIOSHeader;
 
 #endif
 

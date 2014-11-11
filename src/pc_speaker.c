@@ -1,9 +1,10 @@
-#include "../../include/software.h"
-#include "../../include/timertick_handler.h"
+#include "../include/pc_speaker.h"
+#include "../include/timertick_handler.h"
 
-/* SACADO DE OSDEV */
+/* Las funciones set_speaker_frec, play_speaker y stop_speaker
+ * estan basadas en el codigo de ejemplo de http://wiki.osdev.org/PC_Speaker */
 
-void set_speaker_frec(int freq){
+int set_speaker_freq(int freq){
 
 	int div = 1193180 / freq; /* 1193180 is the PIT frequency */
 	
@@ -11,17 +12,23 @@ void set_speaker_frec(int freq){
 	_outb(0x42, (short int)div); /* sets frec on channel 2 of the PIT */
 	_outb(0x42, (short int)(div >> 8));
 
+	return 1;
+
 }
 
-void play_speaker(int ms){
+int play_speaker(int ms){
 
 	short int tmp;
 	tmp = _inb(0x61);
+
 	if (tmp != (tmp | 3)){
 		_outb(0x61, tmp | 3);
 	}
+
 	wait(ms);
 	stop_speaker();
+
+	return 1;
 }
 
 void stop_speaker(){
@@ -35,6 +42,8 @@ void stop_speaker(){
 void wait(int ms){
 	
 	int end = getTicks() + ms;
+	_Sti();
 	while (getTicks() < end){};
+	_Cli();
 
 }
