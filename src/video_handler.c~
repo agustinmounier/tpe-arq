@@ -15,9 +15,15 @@ void video_handler(){
 }
 
 void video_input(char input){
+
+	if(cursor_pos >= (25 * 80 * 2))
+		video_screen_up();
+
 	video[cursor_pos]= input;
+
 	cursor_pos+=2;
 	cursor_row+=2;
+
 	video_update_cursor(cursor_pos);
 }
 
@@ -63,6 +69,22 @@ void video_clear(){
 	video_string(comand_prompt);
 	video_update_cursor(cursor_pos);
 	
+}
+
+void video_screen_up(){
+	
+	int i = 160;
+	while(i < (80*25*2))
+	{
+		video[i - 160] = video[i];
+		i += 2;
+	};
+	
+	for(i -= 160; i <= (80*25*2); i += 2){
+		video[i] = ' ';
+	}
+
+	cursor_pos -= 160;
 	
 }
 

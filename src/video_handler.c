@@ -15,13 +15,20 @@ void video_handler(){
 }
 
 void video_input(char input){
+
+	if(cursor_pos >= (25 * 80 * 2))
+		video_screen_up();
+
 	video[cursor_pos]= input;
+
 	cursor_pos+=2;
 	cursor_row+=2;
+
 	video_update_cursor(cursor_pos);
 }
 
 void video_backspace(){
+
 	if (cursor_row > 4){
 		cursor_pos-=2;
 		cursor_row-=2;
@@ -31,10 +38,12 @@ void video_backspace(){
 }
 
 void video_enter(){
+
 	int cursor_row_pos = ((cursor_pos%80)/2) + 1;
-	for (; cursor_row_pos <= 80; cursor_row_pos++){
+
+	for (; cursor_row_pos <= 80; cursor_row_pos++)
 		cursor_pos+=2;		
-	}
+	
 	cursor_row = 0;
 	video_string(comand_prompt);
 }
@@ -42,27 +51,46 @@ void video_string(char * string){
 	
 	int lenght = strlen(string);
 	int i = 0;
-	for (; i < lenght; i++){
+
+	for (; i < lenght; i++)
 		video_input(string[i]);
-	}
+	
 
 }
 
 void video_clear(){
 	
 	int i = 0;
-	while(i < (80*25*2))
-	{
+
+	while(i < (80*25*2)){
 		video[i]=' ';
 		i++;
 		video[i]=WHITE_TXT;
 		i++;
 	};
+
 	cursor_pos = 0;
 	cursor_row = 0;
+
 	video_string(comand_prompt);
 	video_update_cursor(cursor_pos);
 	
+}
+
+void video_screen_up(){
+	
+	int i = 160;
+
+	while(i < (80*25*2)){
+		video[i - 160] = video[i];
+		i += 2;
+	};
+	
+	for(i -= 160; i <= (80*25*2); i += 2){
+		video[i] = ' ';
+	}
+
+	cursor_pos -= 160;
 	
 }
 

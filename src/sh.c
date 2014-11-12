@@ -3,10 +3,18 @@
 #include "../include/lib.h"
 #include "../include/keyboard_handler.h"
 #include "../include/software.h"
+#include "../include/kasm.h" /*TODO: sacar */
+#include "../include/exceptions.h"
 
 static char query[SH_BUFFER_SIZE];
-static shComand comands[] = {{"clear"},{"infoidt"}};
 static char comand[10];
+
+
+static shComand comands[] = {{"clear", clear},
+			     {"infoidt", printIDT},
+			     {"sounds", sounds},
+			     {"biosinfo", print_BIOS_info}
+			    };
 
 void shell_init(){
 	
@@ -34,11 +42,12 @@ void parse_shBuffer(char * shBuffer){
 	
 	int index = 0;
 	while(shBuffer[index] != ASCII_ENTER){
+
 		if(index == SH_BUFFER_SIZE)
 			return;
+
 		query[index] = shBuffer[index];
 		index++;
-		
 	}
 	query[index] = ASCII_ENTER;
 	
@@ -56,19 +65,25 @@ void parse_shBuffer(char * shBuffer){
 }
 
 int getComand(char * query, char * comand){
+
 	int i = 0;
 	int comandIndex;
+
 	while(query[i] != ' ' && query[i] != ASCII_ENTER){
 		comand[i] = query[i];	
 		i++;
 	}
+
 	comand[i] = '\0';
 	
 	if((comandIndex = isComand(comand)) != -1){
-		sounds();
-		print_BIOS_info();
+		/*_div_zero();*/
+		comands[comandIndex].func();
+		/*triger_bound_excep();*/
+		/*_overflow();*/
 	}else
 		return 0;
+
 	return 1;
 	
 	

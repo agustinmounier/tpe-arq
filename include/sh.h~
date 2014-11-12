@@ -5,21 +5,25 @@
 #define CANT_COMANDS 2
 #define BUFFER_EMPTY -1
 
+#include "software.h"
 
-
+/*
 typedef struct {
 	int cantArgs;
 	char (*args)[10];
 }tParams;
+*/
 
-typedef int (*tFunc)(tParams * params);
+typedef void (* tFunc)();
 
 typedef struct {
 	char * name;
 	tFunc func;
 } shComand;
 
-void shell_init(int idt);
+
+
+void shell_init();
 void parse_shBuffer(char * shBuffer);
 int getComand(char * query, char * comand);
 int isComand(char * comand);

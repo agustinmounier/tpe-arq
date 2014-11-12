@@ -2,22 +2,26 @@
 #define _sh_
 
 #define SH_BUFFER_SIZE 512
-#define CANT_COMANDS 2
+#define CANT_COMANDS 4
 #define BUFFER_EMPTY -1
 
+#include "software.h"
 
-
+/*
 typedef struct {
 	int cantArgs;
 	char (*args)[10];
 }tParams;
+*/
 
-typedef int (*tFunc)(tParams * params);
+typedef void (* tFunc)();
 
 typedef struct {
 	char * name;
 	tFunc func;
 } shComand;
+
+
 
 void shell_init();
 void parse_shBuffer(char * shBuffer);

@@ -5,10 +5,10 @@
 #define INFO_IDT -11
 #include "defs.h"
 
-int clear_func();
+void clear_func();
 void printIDT();
 void printINTinfo(DESCR_INT * inter);
-void monkey_island_theme();
+void sounds();
 void print_BIOS_info();
 
 #endif

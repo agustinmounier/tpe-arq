@@ -1,8 +1,9 @@
 #include "../../include/software.h"
 
+void clear_func(){
 
-int clear_func(){
 	char func = CLEAR_FUNC;
-	return	printf("%c", func);
+
+	printf("%c", func);
 	
 }

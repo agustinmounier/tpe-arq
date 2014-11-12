@@ -21,6 +21,15 @@ void		_int_08_hand();      /* Timer tick */
 void		_int_09_hand();      /* Keyboard */
 void		_int_80_hand(); 
 
+void		_int_00_hand();
+void            _div_zero();
+
+void		_int_04_hand();
+void 		_overflow();
+
+void		_int_05_hand();
+void            _check_bounds(int index, int * bounds);
+
 void            _outb(unsigned short int port, unsigned char value);
 void		_sidt(IDTR *);
 

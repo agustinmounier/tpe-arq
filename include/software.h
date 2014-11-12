@@ -5,7 +5,7 @@
 #define INFO_IDT -11
 #include "defs.h"
 
-int clear_func();
+void clear();
 void printIDT();
 void printINTinfo(DESCR_INT * inter);
 void sounds();

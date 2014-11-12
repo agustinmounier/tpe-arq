@@ -9,10 +9,20 @@ GLOBAL _syscall
 GLOBAL _int_80_hand
 GLOBAL _outb
 GLOBAL _sidt
+GLOBAL _int_00_hand
+GLOBAL _div_zero
+GLOBAL _overflow
+GLOBAL _int_04_hand
+GLOBAL _int_05_hand
+GLOBAL _check_bounds
+
 
 EXTERN  int_08
 EXTERN  int_80
 EXTERN	keyboard_hand
+EXTERN	div_by_zero
+EXTERN	overflow_ocurr
+EXTERN  index_out_bounds
 
 
 
@@ -100,6 +110,95 @@ _int_09_hand:
 	
 	popa
 	iret
+
+_int_00_hand:
+	pusha
+
+	cli
+	call div_by_zero
+	sti
+
+	mov al, 20h
+	out 20h, al
+		
+	popa
+	iret
+
+
+_div_zero:
+	pusha
+	pushf
+
+	mov ax, 0x02
+	mov cx, 0x00
+
+	div cx
+
+	popa
+	popf
+	ret
+
+_overflow:
+	pusha	
+	pushf
+	
+	mov ax, 0x03
+	mov cx, 0x02
+
+	add ax, cx
+
+	into
+
+	popa
+	popf
+	
+	
+	ret
+
+_int_04_hand:
+	pusha
+
+	cli
+	call overflow_ocurr
+	sti
+
+	mov al, 20h
+	out 20h, al
+		
+	popa
+	iret
+
+
+_check_bounds:
+	push ebp
+	mov ebp, esp
+	
+	push eax
+	push edx
+
+	mov eax, [ss:ebp + 8]
+	mov edx, [ss:ebp + 12]
+
+	bound edx, [eax]
+
+	pop eax
+	pop edx
+	leave
+	ret
+
+_int_05_hand:
+	pusha
+
+	cli
+	call index_out_bounds
+	sti
+
+	mov al, 20h
+	out 20h, al
+		
+	popa
+	iret
+	
 
 _eoi:
 	push 	ebp
