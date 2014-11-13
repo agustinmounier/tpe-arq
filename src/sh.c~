@@ -7,18 +7,19 @@
 #include "../include/exceptions.h"
 
 static char query[SH_BUFFER_SIZE];
-static char comand[10];
+
 
 
 static shComand comands[] = {{"clear", clear},
 			     {"infoidt", printIDT},
 			     {"sounds", sounds},
-			     {"biosinfo", print_BIOS_info}
+			     {"biosinfo", print_BIOS_info},
+			     {"exception", trigger_excp}
 			    };
 
 void shell_init(){
 	
-	int bytesRed = 0;
+	int bytesRead = 0;
 	char shBuffer[SH_BUFFER_SIZE];
 	
 	printf("Welcome user!. \n");
@@ -26,8 +27,8 @@ void shell_init(){
 
 	while(1){
 		
-		bytesRed = read(STDIN, shBuffer, SH_BUFFER_SIZE);
-		if(shBuffer[0] != ASCII_ENTER)
+		bytesRead = read(STDIN, shBuffer, SH_BUFFER_SIZE);
+		if(shBuffer[0] != ASCII_ENTER && shBuffer[0] != BUFFER_EMPTY)
 			parse_shBuffer(shBuffer);
 		
 	}
@@ -39,8 +40,9 @@ void parse_shBuffer(char * shBuffer){
 	
 	/* TODO: parsear parametros de funcs */
 
-	
+	int comandIndex;
 	int index = 0;
+	char comand[3][15];
 	while(shBuffer[index] != ASCII_ENTER){
 
 		if(index == SH_BUFFER_SIZE)
@@ -53,38 +55,52 @@ void parse_shBuffer(char * shBuffer){
 	
 	/* TODO: parse de comands */
 	
-	if(getComand(query, comand) != 1)
+	if((comandIndex = getComand(query, comand)) != -1){
+		_div_zero();		
+		/*
+		if(comandIndex == 4){
+			printf("%s.\n", comand[0]);
+			printf("%s.\n", comand[1]);			
+			comands[comandIndex].func((int)comand[1][0] - '0');
+		}else
+			comands[comandIndex].func();
+		/*triger_bound_excep();*/
+		/*_overflow();*/
+	}else
 		printf("Comand not found.\n");
 	
 
 	shBuffer[index] = BUFFER_EMPTY;
-		
-
+	
 	
 
 }
 
-int getComand(char * query, char * comand){
+int getComand(char * query, char  comand[3][15]){
 
 	int i = 0;
-	int comandIndex;
+	int j = 0;
+	int h = 0;
+	while(query[h] != ASCII_ENTER){
 
-	while(query[i] != ' ' && query[i] != ASCII_ENTER){
-		comand[i] = query[i];	
-		i++;
-	}
+		if(query[h] == ' '){
+			comand[i][j] = '\0';
+			i++;
+			j = 0;
+		}else{
+			comand[i][j] = query[h];
+			j++;
+		}
 
-	comand[i] = '\0';
+		if(i > 3)
+			return -1;
 	
-	if((comandIndex = isComand(comand)) != -1){
-		_div_zero();
-		/*comands[comandIndex].func();*/
-		/*triger_bound_excep();*/
-		/*_overflow();*/
-	}else
-		return 0;
+		h++;
+	}
+	comand[i][j] = '\0';
+	
+	return isComand(comand[0]);
 
-	return 1;
 	
 	
 }

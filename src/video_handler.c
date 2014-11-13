@@ -4,14 +4,14 @@
 #include "../include/kc.h"
 
 char *video = (char *) 0xb8000;	
-static int cursor_pos = 0;
-static int cursor_row = 0;
+static int cursor_pos;
+static int cursor_row;
 static char comand_prompt[] = "$:";
 
-void video_handler(){
+void video_init(){
 
-
-
+	cursor_pos = 0;
+	cursor_row = 0;
 }
 
 void video_input(char input){

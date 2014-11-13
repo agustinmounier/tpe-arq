@@ -4,6 +4,7 @@
 #include "../include/defs.h"
 #include "../include/kc.h"
 #include "../include/pc_speaker.h"
+#include "../include/exceptions.h"
 
 int int_80(int func, int file_desc, int arg1, int arg2){
 	
@@ -28,6 +29,21 @@ int int_80(int func, int file_desc, int arg1, int arg2){
 			break;
 		case GET_SMBIOS:
 			ans = getSMBIOS((char **)arg1);
+			break;
+		case EXCEPTION:
+			switch( arg1 ){
+
+				case 1:
+					_div_zero();
+					break;
+				case 2:
+					triger_bound_excep();
+					break;
+				case 3:
+					_overflow();
+					break;
+
+			}
 			break;
 	}
 	

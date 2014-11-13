@@ -2,8 +2,9 @@
 #define _sh_
 
 #define SH_BUFFER_SIZE 512
-#define CANT_COMANDS 2
+#define CANT_COMANDS 5
 #define BUFFER_EMPTY -1
+
 
 #include "software.h"
 
@@ -25,7 +26,7 @@ typedef struct {
 
 void shell_init();
 void parse_shBuffer(char * shBuffer);
-int getComand(char * query, char * comand);
+int getComand(char * query, char (* comand)[3]);
 int isComand(char * comand);
 
 

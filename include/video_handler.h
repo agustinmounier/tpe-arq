@@ -1,7 +1,7 @@
 #ifndef _video_handler_
 #define _video_handler_
 
-void video_handler();
+void video_init();
 void video_string(char * string);
 void video_enter();
 void video_backspace();

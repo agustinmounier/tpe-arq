@@ -15,14 +15,18 @@ GLOBAL _overflow
 GLOBAL _int_04_hand
 GLOBAL _int_05_hand
 GLOBAL _check_bounds
+GLOBAl _int_74_hand
 
 
 EXTERN  int_08
 EXTERN  int_80
 EXTERN	keyboard_hand
-EXTERN	div_by_zero
-EXTERN	overflow_ocurr
-EXTERN  index_out_bounds
+EXTERN	div_by_zero_hand
+EXTERN	overflow_ocurr_hand
+EXTERN  index_out_bounds_hand
+EXTERN 	int_74_handler
+EXTERN 	shell_init
+EXTERN 	kmain
 
 
 
@@ -113,14 +117,12 @@ _int_09_hand:
 
 _int_00_hand:
 	pusha
-
-	cli
-	call div_by_zero
-	sti
-
+	
+	call div_by_zero_hand
+	
 	mov al, 20h
 	out 20h, al
-		
+	
 	popa
 	iret
 
@@ -159,7 +161,7 @@ _int_04_hand:
 	pusha
 
 	cli
-	call overflow_ocurr
+	call overflow_ocurr_hand
 	sti
 
 	mov al, 20h
@@ -173,15 +175,15 @@ _check_bounds:
 	push ebp
 	mov ebp, esp
 	
-	push eax
+	push ecx
 	push edx
 
-	mov eax, [ss:ebp + 8]
-	mov edx, [ss:ebp + 12]
+	mov ecx, [ebp + 8]
+	mov edx, [ebp + 12]
 
-	bound edx, [eax]
+	bound edx, [ecx]
 
-	pop eax
+	pop ecx
 	pop edx
 	leave
 	ret
@@ -189,13 +191,12 @@ _check_bounds:
 _int_05_hand:
 	pusha
 
-	cli
-	call index_out_bounds
-	sti
+	call index_out_bounds_hand
 
-	mov al, 20h
-	out 20h, al
-		
+	
+	mov al, 0x20
+	out 0x20, al
+	
 	popa
 	iret
 	
@@ -308,7 +309,25 @@ _syscall:
 
 	leave
 	ret
+
+_int_74_hand:
+	push ebp
+	mov ebp,esp
 	
+	pusha
+	in al, 0x60
+	push eax
+
+	call int_74_handler
+
+	mov al, 0x20
+	out 0x20, al
+	out 0xA0, al
+	
+	pop eax
+	popa
+	leave
+	iret
 
 
 ; Debug para el BOCHS, detiene la ejecució; Para continuar colocar en el BOCHSDBG: set $eax=0

@@ -1,6 +1,6 @@
 #include "../include/kasm.h"
 #include "../include/keyboard_handler.h"
-#include "../include/video_handler.h"
+#include "../include/terminal.h"
 
 
 static int count = 0;

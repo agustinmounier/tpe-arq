@@ -3,12 +3,14 @@
 
 #define DIV_BY_ZERO       -20
 #define INDEX_OUT_BOUNDS  -21
-#define OVERFLOW          -22
 
 
-void div_by_zero();
-void overflow_ocurr();
-void index_out_bounds();
+
+void div_by_zero_hand();
+void overflow_ocurr_hand();
+void index_out_bounds_hand();
 void triger_bound_excep();
+void set_freq(int excp, int freq);
+void trigger_excp(int excp);
 
 #endif

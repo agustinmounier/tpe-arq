@@ -2,6 +2,8 @@
 #include "../include/defs.h"
 #include "../include/timertick_handler.h"
 #include "../include/terminal.h"
+#include "../include/mouse_handler.h"
+#include "../include/video_handler.h"
 #include "../include/stdio.h"
 
 DESCR_INT idt[0x100];			/* IDT de 256 entradas*/
@@ -24,6 +26,9 @@ kmain()
 /* Inicializa la terminal */
 
 	terminal_init();
+	video_init();
+	/*mouse_init();*/
+	
 
 /* CARGA DE IDT CON LA RUTINA DE ATENCION DE IRQ0    */
 
@@ -34,6 +39,7 @@ kmain()
         setup_IDT_entry (&idt[0x08], 0x08, (dword)&_int_08_hand, ACS_INT, 0);
 	setup_IDT_entry (&idt[0x09], 0x08, (dword)&_int_09_hand, ACS_INT, 0);
 	setup_IDT_entry (&idt[0x80], 0x08, (dword)&_int_80_hand, ACS_INT, 0);
+	/*setup_IDT_entry (&idt[0x74], 0x08, (dword)&_int_74_hand, ACS_INT, 0);*/
 	
 /* Carga de IDTR    */
 

@@ -19,11 +19,11 @@ gcc -c ../src/sh.c  -o sh.o -fno-builtin
 gcc -c ../src/io.c  -o io.o -fno-builtin
 gcc -c ../src/pc_speaker.c  -o pc_speaker.o -fno-builtin
 gcc -c ../src/exceptions.c  -o exceptions.o -fno-builtin
-
+gcc -c ../src/mouse_handler.c  -o mouse_handler.o -fno-builtin
 
 gcc -c ../src/software/clear.c  -o clear.o -fno-builtin
 gcc -c ../src/software/infoIDT.c  -o infoIDT.o -fno-builtin
 gcc -c ../src/software/sounds.c  -o sounds.o -fno-builtin
 gcc -c ../src/software/BIOS_info.c  -o BIOS_info.o -fno-builtin
 
-ld -T ../src/link.ld -o kernel.bin kernel.o kstart.o libc.o libasm.o timertick_handler.o keyboard_handler.o video_handler.o terminal.o buffer.o lib.o syscall_hand.o stdlib.o stdio.o sh.o io.o clear.o infoIDT.o pc_speaker.o BIOS_info.o sounds.o exceptions.o
+ld -T ../src/link.ld -o kernel.bin kernel.o kstart.o libc.o libasm.o timertick_handler.o keyboard_handler.o video_handler.o terminal.o buffer.o lib.o syscall_hand.o stdlib.o stdio.o sh.o io.o clear.o infoIDT.o pc_speaker.o BIOS_info.o sounds.o exceptions.o mouse_handler.o

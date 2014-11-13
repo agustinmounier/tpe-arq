@@ -57,6 +57,7 @@ static char scancode_to_char(unsigned int scancode) {
 }
 
 static int classify(unsigned int scancode) {
+
 	if(NUMBER_INIT <= scancode & scancode<= NUMBER_END) {
 		return NUMBER;
 	} else if(ROW1_INIT <= scancode & scancode <= ROW1_END){

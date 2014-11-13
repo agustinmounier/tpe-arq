@@ -19,10 +19,11 @@ void		_Sti(void);	 /* Habilita interrupciones  */
 
 void		_int_08_hand();      /* Timer tick */
 void		_int_09_hand();      /* Keyboard */
-void		_int_80_hand(); 
+void		_int_80_hand();
+void 		_int_74_hand(); 
 
 void		_int_00_hand();
-void            _div_zero();
+void            _div_zero_hand();
 
 void		_int_04_hand();
 void 		_overflow();
