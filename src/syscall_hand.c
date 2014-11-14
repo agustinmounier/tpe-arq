@@ -40,7 +40,7 @@ int int_80(int func, int file_desc, int arg1, int arg2){
 					triger_bound_excep();
 					break;
 				case 3:
-					_overflow();
+					_invalid_opcode();
 					break;
 
 			}

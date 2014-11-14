@@ -25,8 +25,8 @@ void 		_int_74_hand();
 void		_int_00_hand();
 void            _div_zero_hand();
 
-void		_int_04_hand();
-void 		_overflow();
+void		_int_06_hand();
+void 		_invalid_opcode();
 
 void		_int_05_hand();
 void            _check_bounds(int index, int * bounds);

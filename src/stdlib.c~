@@ -39,3 +39,48 @@ char * itoa(int value, char * str, int base){
 	return str;	
 
 }
+
+int atoi(char * num){
+	
+	int i = 0;
+	int resp = 0;
+	int curr = 0;
+	int isNeg = 0;
+	int length = strlen(num) - 1;
+
+	if(num[0] == '-'){
+		isNeg = 1;
+		i++;
+		length--;
+	}
+	
+	while(num[i] != '\0'){
+		
+		curr = (int)num[i] - '0';
+
+		if(curr < 0 || curr > 9)
+			return resp;
+
+		curr *= pow(10, length);
+		length--;
+		resp += curr;
+		i++;
+
+	}
+	if(isNeg)
+		return resp*(-1);
+	return resp;
+
+}
+
+int pow(int n, int pot){
+	if(pot == 0)
+		return 1;
+	return n*pow(n, pot -1);
+}
+
+
+
+
+
+

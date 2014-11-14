@@ -7,7 +7,7 @@
 
 
 void div_by_zero_hand();
-void overflow_ocurr_hand();
+void invalid_opcode_hand();
 void index_out_bounds_hand();
 void triger_bound_excep();
 void set_freq(int excp, int freq);

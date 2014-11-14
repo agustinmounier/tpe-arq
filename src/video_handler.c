@@ -2,7 +2,7 @@
 #include "../include/lib.h"
 #include "../include/kasm.h"
 #include "../include/kc.h"
-
+#include "../include/sh.h"
 char *video = (char *) 0xb8000;	
 static int cursor_pos;
 static int cursor_row;
@@ -16,10 +16,15 @@ void video_init(){
 
 void video_input(char input){
 
-	if(cursor_pos >= (25 * 80 * 2))
-		video_screen_up();
+	if(cursor_pos >= (25 * 80 * 2)){
+		/*if(video[cursor_pos - 160] != '$')
+			display_more();
+		else*/
+			video_screen_up();
+	}
 
-	video[cursor_pos]= input;
+
+	video[cursor_pos] = input;
 
 	cursor_pos+=2;
 	cursor_row+=2;
@@ -39,13 +44,12 @@ void video_backspace(){
 
 void video_enter(){
 
-	int cursor_row_pos = ((cursor_pos%80)/2) + 1;
+	int cursor_col_pos = (cursor_pos % 160);
 
-	for (; cursor_row_pos <= 80; cursor_row_pos++)
-		cursor_pos+=2;		
+	cursor_pos+= (160 - cursor_col_pos);		
 	
 	cursor_row = 0;
-	video_string(comand_prompt);
+
 }
 void video_string(char * string){
 	
@@ -92,6 +96,13 @@ void video_screen_up(){
 
 	cursor_pos -= 160;
 	
+}
+
+void display_more(){
+
+	video_screen_up();
+	shell_display_more();
+
 }
 
 /* SACADO DE OSDEV */

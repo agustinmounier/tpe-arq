@@ -15,7 +15,7 @@ gcc -c ../src/lib.c  -o lib.o -fno-builtin
 gcc -c ../src/syscall_hand.c  -o syscall_hand.o -fno-builtin
 gcc -c ../src/stdlib.c  -o stdlib.o -fno-builtin -fno-stack-protector
 gcc -c ../src/stdio.c  -o stdio.o -fno-builtin -fno-stack-protector
-gcc -c ../src/sh.c  -o sh.o -fno-builtin
+gcc -c ../src/sh.c  -o sh.o -fno-builtin -fno-stack-protector
 gcc -c ../src/io.c  -o io.o -fno-builtin
 gcc -c ../src/pc_speaker.c  -o pc_speaker.o -fno-builtin
 gcc -c ../src/exceptions.c  -o exceptions.o -fno-builtin

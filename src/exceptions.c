@@ -3,7 +3,8 @@
 #include "../include/kasm.h"
 #include "../include/syscall_hand.h"
 
-static int freq_excp[] = {300, 500, 800};
+static int freq_excp[] = {400, 500, 600};
+static char exceptions[3][25] = {"Zero divide", "Bound range exceeded", "Invalid opcode"};
 
 void div_by_zero_hand(){
 
@@ -12,18 +13,17 @@ void div_by_zero_hand(){
 	printf("Exception: Divide-by-zero ocurred.\n");
 }
 
-void overflow_ocurr_hand(){
-	_syscall(SET_FREQ, 0, freq_excp[1], 0);
+void invalid_opcode_hand(){
+	_syscall(SET_FREQ, 0, freq_excp[2], 0);
 	_syscall(PLAY_SPEAKER, 0, 10, 0);
-	printf("Exception: Overflow ocurred.\n");
+	printf("Exception: Invalid opcode ocurred.\n");
 }
 
 void index_out_bounds_hand(){
 
-	_syscall(SET_FREQ, 0, freq_excp[2], 0);
+	_syscall(SET_FREQ, 0, freq_excp[1], 0);
 	_syscall(PLAY_SPEAKER, 0, 10, 0);
-	printf("Exception: Bound Range Exceeded ocurred.");
-	return;
+	printf("Exception: Bound Range Exceeded ocurred.\n");
 }
 
 void triger_bound_excep(){
@@ -32,17 +32,15 @@ void triger_bound_excep(){
 	int bounds[] = {0, 10};
 	
 	_check_bounds(index, bounds);
-
 }
 
 void set_freq(int excp, int freq){
 
 	freq_excp[excp] = freq;	
+	printf("Frequency of exception: %s is now set to: %d Hz.\n", exceptions[excp], freq);
 
 }
 
 void trigger_excp(int excp){
-	printf("%d", excp);
 	_syscall(EXCEPTION, 0, excp, 0);
-
 }

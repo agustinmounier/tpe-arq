@@ -1,8 +1,9 @@
 #ifndef _stdlib_
 #define _stdlib_
 
-#include "common.h"
+
 
 char * itoa(int value, char * str, int base);
+int atoi(char * num);
 
 #endif

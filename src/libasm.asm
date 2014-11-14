@@ -11,8 +11,8 @@ GLOBAL _outb
 GLOBAL _sidt
 GLOBAL _int_00_hand
 GLOBAL _div_zero
-GLOBAL _overflow
-GLOBAL _int_04_hand
+GLOBAL _invalid_opcode
+GLOBAL _int_06_hand
 GLOBAL _int_05_hand
 GLOBAL _check_bounds
 GLOBAl _int_74_hand
@@ -22,7 +22,7 @@ EXTERN  int_08
 EXTERN  int_80
 EXTERN	keyboard_hand
 EXTERN	div_by_zero_hand
-EXTERN	overflow_ocurr_hand
+EXTERN	invalid_opcode_hand
 EXTERN  index_out_bounds_hand
 EXTERN 	int_74_handler
 EXTERN 	shell_init
@@ -116,14 +116,16 @@ _int_09_hand:
 	iret
 
 _int_00_hand:
-	pusha
-	
+	pusha	
+
 	call div_by_zero_hand
+	
 	
 	mov al, 20h
 	out 20h, al
 	
 	popa
+
 	iret
 
 
@@ -140,16 +142,11 @@ _div_zero:
 	popf
 	ret
 
-_overflow:
+_invalid_opcode:
 	pusha	
 	pushf
 	
-	mov ax, 0x03
-	mov cx, 0x02
-
-	add ax, cx
-
-	into
+	ud2
 
 	popa
 	popf
@@ -157,12 +154,10 @@ _overflow:
 	
 	ret
 
-_int_04_hand:
+_int_06_hand:
 	pusha
 
-	cli
-	call overflow_ocurr_hand
-	sti
+	call invalid_opcode_hand
 
 	mov al, 20h
 	out 20h, al
@@ -192,7 +187,6 @@ _int_05_hand:
 	pusha
 
 	call index_out_bounds_hand
-
 	
 	mov al, 0x20
 	out 0x20, al
@@ -204,12 +198,12 @@ _int_05_hand:
 _eoi:
 	push 	ebp
 	mov	ebp, esp
-	push 	eax	
+	pusha	
 
 	mov 	al,0x20
 	out 	0x20,al
 
-	pop	eax
+	popa
 	leave
 	ret
 
