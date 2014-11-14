@@ -3,10 +3,14 @@
 #include "../include/kasm.h"
 #include "../include/kc.h"
 #include "../include/sh.h"
+
 char *video = (char *) 0xb8000;	
 static int cursor_pos;
 static int cursor_row;
 static char comand_prompt[] = "$:";
+
+static int prev_x = 0;
+static int prev_y = 0;
 
 void video_init(){
 
@@ -105,13 +109,24 @@ void display_more(){
 
 }
 
-/* SACADO DE OSDEV */
+void update_mouse(int x, int y, int color){
+	
+	int pos = (prev_y * 160) + (prev_x * 2) + 1;
+	video[pos] = WHITE_TXT;
+	pos = (y * 160) + (x * 2) + 1;
+	video[pos] = color;
+	prev_y = y;
+	prev_x = x;
+}
+
+
+/* video_update_cursor is based on the example code of http://wiki.osdev.org/Text_Mode_Cursor */
 void video_update_cursor(int cursor_pos){
 
-	_outb(0x03D4, 0x0E);
+	_outb(0x03D4, 0x0E);// Index 0x0E refers to the cursor location high register.
 	_outb(0x03D5, (cursor_pos/2) >> 8);
 	
-	_outb(0x03D4, 0x0F);
+	_outb(0x03D4, 0x0F);// Index 0x0F refers to the cursor location low register.
 	_outb(0x03D5, (cursor_pos)/2);
 
 }

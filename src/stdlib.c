@@ -24,7 +24,7 @@ char * itoa(int value, char * str, int base){
 		if(digit <= 9)
 			aux[index] = '0' + digit;
 		else
-			aux[index] = 'A' + digit;
+			aux[index] = 'A' + (digit-10);
 
 		index++;	
 	}while(value != 0);

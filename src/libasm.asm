@@ -309,17 +309,17 @@ _int_74_hand:
 	mov ebp,esp
 	
 	pusha
-	in al, 0x60
+	
+	in al,60h
 	push eax
-
 	call int_74_handler
 
-	mov al, 0x20
-	out 0x20, al
+	mov al, 20h
 	out 0xA0, al
-	
+	out 0x20, al
 	pop eax
 	popa
+
 	leave
 	iret
 

@@ -37,7 +37,7 @@ void triger_bound_excep(){
 void set_freq(int excp, int freq){
 
 	freq_excp[excp] = freq;	
-	printf("Frequency of exception %s is now set to %d Hz.\n", exceptions[excp], freq);
+	printf("Frequency of exception: %s is now set to: %d Hz.\n", exceptions[excp], freq);
 
 }
 

@@ -12,23 +12,19 @@ void printIDT(){
 	int idtIndex = 0;
 	for (; idtIndex < idtr.limit; idtIndex+=8){
 		if((byte)(((DESCR_INT *)(idtr.base + idtIndex))->selector) == (byte)0x08){
-			printf("Descripcion de la gate %x h.\n", idtIndex/8);
+			printf("Description of gate 0x%x.\n", idtIndex/8);
 			printINTinfo((DESCR_INT *)(idtr.base + idtIndex));
-			printf("\n");
 		}
 	}		
-	
-	
 		
 }
 
 void printINTinfo(DESCR_INT * inter){
 
-	printf("offset_low = %d\n", inter->offset_l);
-	printf("offset_high = %d\n", inter->offset_h);
-	printf("code segment selector = %d\n", inter->selector);
-	printf("zero = %d\n", inter->cero);
-	printf("access = %b\n", inter->access);
+	printf("offset = 0x%x0%x ", inter->offset_h, inter->offset_l);
+	printf("segment selector = %d ", inter->selector);
+	printf("zero = %d ", inter->cero);
+	printf("access = %b.\n", inter->access);
 	
 
 }

@@ -42,7 +42,7 @@ void stop_speaker(){
 
 void wait(int ms){
 	
-	int end = getTicks() + ms;
+	int end = getTicks() + (ms/55);
 	_Sti();
 	while (getTicks() < end){};
 	_Cli();

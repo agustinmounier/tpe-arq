@@ -35,14 +35,14 @@ int play_speaker(int ms){
 void stop_speaker(){
 
 	short int tmp;
-	tmp = (_inb(0x61) & 0xFC);
+	tmp = (_inb(0x61) & 0xFC); /* sets bit 0 of port 0x61 to 0 */
 	_outb(0x61, tmp);
 
 }
 
 void wait(int ms){
 	
-	int end = getTicks() + ms;
+	int end = getTicks() + ms/55;
 	_Sti();
 	while (getTicks() < end){};
 	_Cli();

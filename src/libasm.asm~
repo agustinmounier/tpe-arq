@@ -188,7 +188,6 @@ _int_05_hand:
 
 	call index_out_bounds_hand
 	
-
 	mov al, 0x20
 	out 0x20, al
 	
@@ -310,17 +309,17 @@ _int_74_hand:
 	mov ebp,esp
 	
 	pusha
-	in al, 0x60
+	
+	in al,60h
 	push eax
-
 	call int_74_handler
 
-	mov al, 0x20
-	out 0x20, al
-	out 0xA0, al
-	
+	mov al, 20h
+	out 0A0h, al
+	out 20h, al
 	pop eax
 	popa
+
 	leave
 	iret
 

@@ -9,20 +9,20 @@ static char exceptions[3][25] = {"Zero divide", "Bound range exceeded", "Invalid
 void div_by_zero_hand(){
 
 	_syscall(SET_FREQ, 0, freq_excp[0], 0);
-	_syscall(PLAY_SPEAKER, 0, 10, 0);
+	_syscall(PLAY_SPEAKER, 0, 500, 0);
 	printf("Exception: Divide-by-zero ocurred.\n");
 }
 
 void invalid_opcode_hand(){
 	_syscall(SET_FREQ, 0, freq_excp[2], 0);
-	_syscall(PLAY_SPEAKER, 0, 10, 0);
+	_syscall(PLAY_SPEAKER, 0, 500, 0);
 	printf("Exception: Invalid opcode ocurred.\n");
 }
 
 void index_out_bounds_hand(){
 
 	_syscall(SET_FREQ, 0, freq_excp[1], 0);
-	_syscall(PLAY_SPEAKER, 0, 10, 0);
+	_syscall(PLAY_SPEAKER, 0, 500, 0);
 	printf("Exception: Bound Range Exceeded ocurred.\n");
 }
 

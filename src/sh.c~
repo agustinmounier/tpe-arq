@@ -4,7 +4,7 @@
 #include "../include/stdlib.h"
 #include "../include/keyboard_handler.h"
 #include "../include/software.h"
-
+#include "../include/exceptions.h"
 
 static char query[SH_BUFFER_SIZE];
 
@@ -64,11 +64,10 @@ void parse_shBuffer(char * shBuffer){
 			if(excp != -1){
 				if(comandIndex == 5){
 					freq = atoi(comand[2]);
-					if(freq < 20 || freq > 20000){
+					if(freq < 20 || freq > 20000)
 						printf("The frequency must be between 20 and 20.000 Hz.\n");
-						return;
-					}
-					comands[comandIndex].func(excp, freq);
+					else
+						comands[comandIndex].func(excp, freq);
 				}else			
 					comands[comandIndex].func(excp + 1);
 			}else
