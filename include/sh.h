@@ -2,7 +2,7 @@
 #define _sh_
 
 #define SH_BUFFER_SIZE 512
-#define CANT_COMANDS 6
+#define CANT_COMANDS 7
 #define BUFFER_EMPTY -1
 
 
@@ -29,6 +29,7 @@ void parse_shBuffer(char * shBuffer);
 int getComand(char * query, char comand[3][15]);
 int isComand(char * comand);
 void shell_display_more();
+void help();
 
 
 #endif

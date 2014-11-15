@@ -22,9 +22,8 @@ void printIDT(){
 void printINTinfo(DESCR_INT * inter){
 
 	printf("offset = 0x%x0%x ", inter->offset_h, inter->offset_l);
-	printf("segment selector = %d ", inter->selector);
+	printf("segment selector = 0x%x ", inter->selector);
 	printf("zero = %d ", inter->cero);
 	printf("access = %b.\n", inter->access);
 	
-
 }

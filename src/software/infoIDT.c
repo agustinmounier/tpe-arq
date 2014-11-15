@@ -15,8 +15,7 @@ void printIDT(){
 			printf("Description of gate 0x%x.\n", idtIndex/8);
 			printINTinfo((DESCR_INT *)(idtr.base + idtIndex));
 		}
-	}		
-		
+	}				
 }
 
 void printINTinfo(DESCR_INT * inter){
@@ -26,5 +25,4 @@ void printINTinfo(DESCR_INT * inter){
 	printf("zero = %d ", inter->cero);
 	printf("access = %b.\n", inter->access);
 	
-
 }

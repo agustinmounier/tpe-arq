@@ -28,6 +28,8 @@ void shell_init();
 void parse_shBuffer(char * shBuffer);
 int getComand(char * query, char comand[3][15]);
 int isComand(char * comand);
+void shell_display_more();
+void help();
 
 
 #endif

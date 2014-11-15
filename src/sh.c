@@ -11,6 +11,7 @@ static char query[SH_BUFFER_SIZE];
 
 
 static shComand comands[] = {{"clear", clear},
+			     {"help", help},
 			     {"infoidt", printIDT},
 			     {"sounds", sounds},
 			     {"biosinfo", print_BIOS_info},
@@ -59,10 +60,10 @@ void parse_shBuffer(char * shBuffer){
 	query[index] = '\n';
 	
 	if((comandIndex = getComand(query, comand)) != -1){
-		if(comandIndex >= 4){
+		if(comandIndex >= 5){
 			excp = validExcp(comand[1]);
 			if(excp != -1){
-				if(comandIndex == 5){
+				if(comandIndex == 6){
 					freq = atoi(comand[2]);
 					if(freq < 20 || freq > 20000)
 						printf("The frequency must be between 20 and 20.000 Hz.\n");
@@ -157,6 +158,26 @@ void shell_display_more(){
 			printf("Invalid character.\n");
 		
 	}
+
+}
+void help(){
+
+	printf("Available comands:\n");
+	printf("infoidt                         Description: shows the content of the IDT.\n");
+
+	printf("biosinfo                        Description: shows the information about\n");
+	printf("                                the BIOS.\n");
+
+	printf("sounds                          Description: Emits different sounds\n");
+	printf("                                through the PC speaker.\n");
+
+	printf("exception [exception-name]      Description: Triggers exception-name.\n");
+
+	printf("setfreq [exception-name] [freq] Description: sets the frequency of the\n");
+	printf("                                sound emited by exception-name to freq.\n");
+	printf("Available exceptions: zero, bounds, opcode.\n");
+
+
 
 }
 
