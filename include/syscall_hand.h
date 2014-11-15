@@ -15,7 +15,7 @@
 #define BOUNDS        -17
 #define OVERFLOW      -18
 
-int int_80(int func, int file_desc, int arg1, int arg2);
+int int_80_handler(int func, int file_desc, int arg1, int arg2);
 
 
 #endif

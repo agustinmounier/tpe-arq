@@ -1,5 +1,5 @@
 #include "../include/stdlib.h"
-#include "../include/lib.h"
+
 
 char * itoa(int value, char * str, int base){
 	int digit;	
@@ -24,7 +24,7 @@ char * itoa(int value, char * str, int base){
 		if(digit <= 9)
 			aux[index] = '0' + digit;
 		else
-			aux[index] = 'A' + digit;
+			aux[index] = 'A' + (digit-10);
 
 		index++;	
 	}while(value != 0);
@@ -79,6 +79,28 @@ int pow(int n, int pot){
 	return n*pow(n, pot -1);
 }
 
+int strlen(const char * str){
+    int i = 0;
+    while (str[i] != '\0'){
+        i++;
+    }
+    return i;
+}
+
+int strcmp(char * str1, char * str2){
+	
+	int index = 0;
+	while(str1[index] != '\0'){
+		if(str1[index] != str2[index])
+			return 0;
+		index++;
+	}
+	if(str2[index] == '\0')
+		return 1;
+	else
+		return 0;
+
+}
 
 
 

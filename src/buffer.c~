@@ -29,5 +29,5 @@ char buffer_pop(bufferCDT * buffer){
 		buffer->tail = (buffer->tail + 1)%buffer->size;
 		return ans;
 	}
-	
+	return -1;
 }

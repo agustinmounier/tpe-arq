@@ -1,5 +1,4 @@
 #include "../include/video_handler.h"
-#include "../include/lib.h"
 #include "../include/kasm.h"
 #include "../include/kc.h"
 #include "../include/sh.h"

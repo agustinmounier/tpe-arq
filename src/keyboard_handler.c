@@ -10,7 +10,7 @@ static char keyboard[4][32] = {{"0012345678900000qwertyuiop00\n0as"},
 
 static int shift = 0;
 
-void keyboard_hand() {
+void int_09_handler() {
 
 	char input;
 	int scancode = _inb(0x60);
@@ -30,6 +30,7 @@ void keyboard_hand() {
 			_Sti();
 			return;
 		}
+		
 
 		if(scancode == BACKSPACE) {
 			input = '\b';
@@ -49,8 +50,6 @@ void keyboard_hand() {
 		
 	}else if(is_shift_released(scancode))
 		shift = 0; 
-	
-	
 	_Sti();
 }
 

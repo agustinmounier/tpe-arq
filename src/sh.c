@@ -1,6 +1,5 @@
 #include "../include/sh.h"
 #include "../include/stdio.h"
-#include "../include/lib.h"
 #include "../include/stdlib.h"
 #include "../include/keyboard_handler.h"
 #include "../include/software.h"
@@ -31,7 +30,8 @@ void shell_init(){
 
 	while(1){
 		
-		bytesRead = read(STDIN, shBuffer, SH_BUFFER_SIZE);
+		bytesRead = read(STDIN, shBuffer, SH_BUFFER_SIZE - 1);/* TODO: ver porq siempre manda cero */
+
 		if(shBuffer[0] != '\n')
 			parse_shBuffer(shBuffer);
 		else if(bytesRead > 0)
@@ -49,17 +49,15 @@ void parse_shBuffer(char * shBuffer){
 	char comand[3][15];
 	int excp;
 	int freq;
-	while(shBuffer[index] != '\n'){
+	while(shBuffer[index] != '\n' && index < SH_BUFFER_SIZE -1){
 
-		if(index == SH_BUFFER_SIZE)
+		if(shBuffer[index] == '\0')
 			return;
-
-		query[index] = shBuffer[index];
+		
 		index++;
 	}
-	query[index] = '\n';
-	
-	if((comandIndex = getComand(query, comand)) != -1){
+
+	if((comandIndex = getComand(shBuffer, comand)) != -1){
 		if(comandIndex >= 5){
 			excp = validExcp(comand[1]);
 			if(excp != -1){

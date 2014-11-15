@@ -113,6 +113,14 @@ int print_hex(int num, FILE * stream){
 	
 }
 
+int print_bin(int num, FILE * stream){
+	
+	char intStr[33];
+	itoa(num, intStr, 2);	
+	return print_str(intStr, stream);
+	
+}
+
 int vscanf(const char * fmt, va_list args){
 	
 	int ch = 0;

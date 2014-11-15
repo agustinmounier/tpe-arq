@@ -1,8 +1,6 @@
 #include "../include/kasm.h"
 #include "../include/keyboard_handler.h"
 #include "../include/terminal.h"
-#include "../include/stdio.h" /* sacar */
-#include "../include/stdlib.h"
 
 static char keyboard[4][32] = {{"0012345678900000qwertyuiop00\n0as"},
 			       {"dfghjkl00000zxcvbnm,.-000 000000"},
@@ -12,7 +10,7 @@ static char keyboard[4][32] = {{"0012345678900000qwertyuiop00\n0as"},
 
 static int shift = 0;
 
-void keyboard_hand() {
+void int_09_handler() {
 
 	char input;
 	int scancode = _inb(0x60);
@@ -21,7 +19,6 @@ void keyboard_hand() {
 
 		if(is_shift(scancode)){
 			shift = 2;
-			_Sti();
 			return;
 		}
 		
@@ -32,6 +29,7 @@ void keyboard_hand() {
 			_Sti();
 			return;
 		}
+		
 
 		if(scancode == BACKSPACE) {
 			input = '\b';
@@ -51,8 +49,6 @@ void keyboard_hand() {
 		
 	}else if(is_shift_released(scancode))
 		shift = 0; 
-	
-	
 	_Sti();
 }
 

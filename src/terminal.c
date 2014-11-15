@@ -34,14 +34,15 @@ int read_from_terminal(char * shBuffer, int cant){
 	while(cantRead < cant){
 	
 		char input = buffer_pop(kBuffer);
-
-		if(input == -1) /* keyboard buffer is empty */
-			break;
-		else if(input == '\n'){
+		
+		
+		if(input == -1){ /* keyboard buffer is empty */
+			return cantRead;
+		}else if(input == '\n'){
 			shBuffer[shBufferIndex] = input;
 			shBufferIndex = 0;
 			cantRead++;
-			break;
+			return cantRead;
 		}else if(input != '\b'){
 			shBuffer[shBufferIndex] = input;
 			shBufferIndex++;

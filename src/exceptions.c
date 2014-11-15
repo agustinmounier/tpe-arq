@@ -10,20 +10,23 @@ void div_by_zero_hand(){
 
 	_syscall(SET_FREQ, 0, freq_excp[0], 0);
 	_syscall(PLAY_SPEAKER, 0, 500, 0);
-	printf("Exception: Divide-by-zero ocurred.\n");
+	printf("Exception: Divide-by-zero ocurred. Please restart.\n");
+
 }
 
 void invalid_opcode_hand(){
 	_syscall(SET_FREQ, 0, freq_excp[2], 0);
 	_syscall(PLAY_SPEAKER, 0, 500, 0);
-	printf("Exception: Invalid opcode ocurred.\n");
+	printf("Exception: Invalid opcode ocurred. Please restart.\n");
+
 }
 
 void index_out_bounds_hand(){
 
 	_syscall(SET_FREQ, 0, freq_excp[1], 0);
 	_syscall(PLAY_SPEAKER, 0, 500, 0);
-	printf("Exception: Bound Range Exceeded ocurred.\n");
+	printf("Exception: Bound Range Exceeded ocurred. Please restart.\n");
+
 }
 
 void triger_bound_excep(){
@@ -43,4 +46,8 @@ void set_freq(int excp, int freq){
 
 void trigger_excp(int excp){
 	_syscall(EXCEPTION, 0, excp, 0);
+}
+
+void panic(){
+	while(1){};
 }

@@ -10,9 +10,9 @@ typedef struct {
 	int tail;
 } bufferCDT;
 
-void buffer_init(bufferCDT * buffer, char * start, int size)
+void buffer_init(bufferCDT * buffer, char * start, int size);
 void add_to_buffer(bufferCDT * buffer, char input);
-void clean_buffer(bufferCDT * buffer);
+void clear_buffer(bufferCDT * buffer);
 char buffer_pop(bufferCDT * buffer);
 
 #endif

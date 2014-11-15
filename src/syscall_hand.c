@@ -6,9 +6,9 @@
 #include "../include/pc_speaker.h"
 #include "../include/exceptions.h"
 
-int int_80(int func, int file_desc, int arg1, int arg2){
+int int_80_handler(int func, int file_desc, int arg1, int arg2){
 	
-	int ans = WRONG_FILE_DESC;	
+	int ans;	
 
 	switch(func){
 

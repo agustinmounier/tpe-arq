@@ -19,7 +19,7 @@ void add_to_buffer(bufferCDT * buffer, char input){
 	buffer->head = (buffer->head + 1)%buffer->size;
 }
 
-void clean_buffer(bufferCDT * buffer){
+void clear_buffer(bufferCDT * buffer){
 	buffer->tail = buffer->head;
 }
 

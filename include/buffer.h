@@ -1,7 +1,7 @@
 #ifndef _buffer_
 #define _buffer_
 
-#define BUFFER_SIZE 	1024
+#define BUFFER_SIZE 	512
 
 typedef struct {
 	char * start;
@@ -12,7 +12,7 @@ typedef struct {
 
 void buffer_init(bufferCDT * buffer, char * start, int size);
 void add_to_buffer(bufferCDT * buffer, char input);
-void clean_buffer(bufferCDT * buffer);
+void clear_buffer(bufferCDT * buffer);
 char buffer_pop(bufferCDT * buffer);
 
 #endif

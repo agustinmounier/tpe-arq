@@ -11,7 +11,6 @@ gcc -c ../src/keyboard_handler.c  -o keyboard_handler.o -fno-builtin
 gcc -c ../src/video_handler.c  -o video_handler.o -fno-builtin
 gcc -c ../src/terminal.c  -o terminal.o -fno-builtin
 gcc -c ../src/buffer.c  -o buffer.o -fno-builtin
-gcc -c ../src/lib.c  -o lib.o -fno-builtin
 gcc -c ../src/syscall_hand.c  -o syscall_hand.o -fno-builtin
 gcc -c ../src/stdlib.c  -o stdlib.o -fno-builtin -fno-stack-protector
 gcc -c ../src/stdio.c  -o stdio.o -fno-builtin -fno-stack-protector
@@ -26,4 +25,4 @@ gcc -c ../src/software/infoIDT.c  -o infoIDT.o -fno-builtin
 gcc -c ../src/software/sounds.c  -o sounds.o -fno-builtin
 gcc -c ../src/software/BIOS_info.c  -o BIOS_info.o -fno-builtin
 
-ld -T ../src/link.ld -o kernel.bin kernel.o kstart.o libc.o libasm.o timertick_handler.o keyboard_handler.o video_handler.o terminal.o buffer.o lib.o syscall_hand.o stdlib.o stdio.o sh.o io.o clear.o infoIDT.o pc_speaker.o BIOS_info.o sounds.o exceptions.o mouse_handler.o
+ld -T ../src/link.ld -o kernel.bin kernel.o kstart.o libc.o libasm.o timertick_handler.o keyboard_handler.o video_handler.o terminal.o buffer.o syscall_hand.o stdlib.o stdio.o sh.o io.o clear.o infoIDT.o pc_speaker.o BIOS_info.o sounds.o exceptions.o mouse_handler.o

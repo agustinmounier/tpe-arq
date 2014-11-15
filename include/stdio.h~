@@ -30,6 +30,6 @@ int getChar();
 int isDigit(int ch);
 int read(int file_desc, char * buffer, int cant);
 int write(int file_desc, char * buffer, int cant);
-int clear_func();
+
 
 #endif

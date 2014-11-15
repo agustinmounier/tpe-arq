@@ -21,8 +21,6 @@ int vfprintf(FILE * stream, const char * fmt, va_list args);
 int print_str(char * str, FILE * stream);
 int print_dec(int num, FILE * stream);
 int print_hex(int num, FILE * stream);
-int scanf(const char * fmt, ...);
-int vscanf(const char * fmt, va_list args);
 void putc(int ch, FILE * stream);
 int getc(FILE * stream);
 void putChar(int ch);

@@ -3,7 +3,6 @@ GLOBAL  _int_08_hand
 GLOBAL	_int_09_hand
 GLOBAL  _mascaraPIC1,_mascaraPIC2,_Cli,_Sti
 GLOBAL  _debug
-GLOBAL _in
 GLOBAL _inb
 GLOBAL _syscall
 GLOBAL _int_80_hand
@@ -16,18 +15,16 @@ GLOBAL _int_06_hand
 GLOBAL _int_05_hand
 GLOBAL _check_bounds
 GLOBAl _int_74_hand
-
+GLOBAl _end_excp
 
 EXTERN  int_08
-EXTERN  int_80
-EXTERN	keyboard_hand
+EXTERN  int_80_handler
+EXTERN	int_09_handler
 EXTERN	div_by_zero_hand
 EXTERN	invalid_opcode_hand
 EXTERN  index_out_bounds_hand
 EXTERN 	int_74_handler
-EXTERN 	shell_init
-EXTERN 	kmain
-
+EXTERN 	panic
 
 
 SECTION .text
@@ -88,30 +85,22 @@ _sidt:
 
 
 _int_08_hand:				; Handler de INT 8 ( Timer tick)
-        push    ds
-        push    es                      ; Se salvan los registros
-        pusha                           ; Carga de DS y ES con el valor del selector
-        mov     ax, 10h			; a utilizar.
-        mov     ds, ax
-        mov     es, ax                  
+        pusha
+    
         call    int_08                 
-        mov	al,20h			; Envio de EOI generico al PIC
-	out	20h,al
-	popa                            
-        pop     es
-        pop     ds
+        
+	call 	_eoi
+	popa
+
         iret
 
 _int_09_hand:
-
 	pusha
-	
 	cli
-	call keyboard_hand
+	call int_09_handler
 	sti
 
 	call _eoi
-	
 	popa
 	iret
 
@@ -119,19 +108,14 @@ _int_00_hand:
 	pusha	
 
 	call div_by_zero_hand
-	
-	
-	mov al, 20h
-	out 20h, al
-	
-	popa
 
+	popa
+	call panic
 	iret
 
 
 _div_zero:
 	pusha
-	pushf
 
 	mov ax, 0x02
 	mov cx, 0x00
@@ -139,30 +123,26 @@ _div_zero:
 	div cx
 
 	popa
-	popf
+
 	ret
 
 _invalid_opcode:
 	pusha	
-	pushf
 	
 	ud2
 
 	popa
-	popf
-	
-	
+
 	ret
 
 _int_06_hand:
 	pusha
 
 	call invalid_opcode_hand
-
-	mov al, 20h
-	out 20h, al
 		
 	popa
+	
+	call panic
 	iret
 
 
@@ -188,37 +168,28 @@ _int_05_hand:
 
 	call index_out_bounds_hand
 	
-	mov al, 0x20
-	out 0x20, al
-	
 	popa
+	call panic
+
 	iret
 	
 
 _eoi:
 	push 	ebp
 	mov	ebp, esp
+
 	pusha	
 
 	mov 	al,0x20
+	out	0xA0,al
 	out 	0x20,al
 
 	popa
+
 	leave
 	ret
 
-_in:
-	push ebp
-	mov ebp, esp
-	pusha
 
-	mov     edx, [ss:ebp+8]
-    	xor     eax, eax
-    	in      al, dx
-
-	popa
-	leave
-	ret
 
 _inb:
     	push    ebp
@@ -232,24 +203,21 @@ _inb:
 	
     	pop     edx
 	
-    	mov     esp, ebp
-    	pop     ebp
+    	leave
 	ret
 
 _outb:
 	push ebp
 	mov ebp, esp
 
-	push eax
-	push edx	
+	pusha	
 	
-	mov edx, [ss:ebp + 8] 
-	mov eax, [ss:ebp + 12]
+	mov dx, [ebp + 8] 
+	mov ax, [ebp + 12]
 
 	out dx, al
 	
-	pop edx
-	pop eax
+	popa
 	
 	leave
 	ret
@@ -266,9 +234,9 @@ _int_80_hand:
 	
 	sti
 	
-	call int_80
+	call int_80_handler
 	
-	pop 	ebx
+	pop 	eax
 	pop 	ebx
 	pop 	ecx
 	pop 	edx
@@ -279,25 +247,23 @@ _int_80_hand:
 _syscall:
 	push 	ebp
 	mov 	ebp, esp
-
+	
+	push	eax
 	push 	ebx	
 	push 	ecx
 	push 	edx
 
-	pushf
-	
-	mov 	edx, [ebp + 20]
-	mov 	ecx, [ebp + 16]
-	mov 	ebx, [ebp + 12]
 	mov 	eax, [ebp + 8]
+	mov 	ebx, [ebp + 12]
+	mov 	ecx, [ebp + 16]
+	mov 	edx, [ebp + 20]
 	
-	int 	80h	
-
-	popf
+	int 	0x80	
 	
-	pop 	edx
+	pop	eax
+	pop 	ebx	
 	pop 	ecx
-	pop 	ebx
+	pop 	edx
 
 	call	_eoi
 
@@ -310,13 +276,13 @@ _int_74_hand:
 	
 	pusha
 	
-	in al,60h
+	in al, 0x60
 	push eax
+
 	call int_74_handler
 
-	mov al, 20h
-	out 0A0h, al
-	out 20h, al
+	call _eoi
+
 	pop eax
 	popa
 

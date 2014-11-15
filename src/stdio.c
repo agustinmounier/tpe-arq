@@ -27,17 +27,6 @@ int printf(const char * fmt, ...){
 
 }
 
-int scanf(const char * fmt, ...){
-	int resp;	
-	va_list args;
-	
-	va_start(args, fmt);
-	resp = vscanf(fmt, args);
-	va_end(args);
-
-	return resp;
-}
-
 int vprintf(const char * fmt, va_list args){
 	return vfprintf(&_stdout, fmt, args);
 }
@@ -121,64 +110,6 @@ int print_bin(int num, FILE * stream){
 	
 }
 
-int vscanf(const char * fmt, va_list args){
-	
-	int ch = 0;
-	int read = 0;
-	int isNegative = 0;
-	void * dest;
-	
-	while((ch = getChar()) != ASCII_ENTER){
-		
-		if(fmt[0] == '%'){
-			switch(fmt[1]){
-				case 'd':
-					dest = va_arg(args, int *);
-					if(ch == '-'){
-						isNegative = 1;
-						ch = getChar();
-					}
-					if(isDigit(ch)){
-						*(int *)dest = (ch - '0');
-						read++;
-					}else
-						return read;
-					
-					while(isDigit(ch = getChar())){
-						*(int *)dest *= 10;
-						*(int *)dest += (ch - '0');
-					}
-					if(isNegative == 1){
-						*(int *)dest = -(*(int *)dest);
-						isNegative = 0;
-					}
-					return read;
-					break;
-				case 'c':
-					dest = va_arg(args, char *);
-					*(char *)dest = ch;
-					read++;
-					return read;
-					break;
-				case 's':
-					dest = va_arg(args, char *);
-					*(char *)dest++ = ch;
-					read++;
-					break;
-				default:
-					return -1;
-
-			}
-		}else
-			return read;
-	
-	}
-	if(fmt[0] == '%' && fmt[1] == 's'){
-		dest = va_arg(args, char *);
-		*(char *)dest = '\0';
-		return read;
-	}
-} 
 
 void putc(int ch, FILE * stream){
 	write(stream->file_desc, (char *)(&ch), 1);
