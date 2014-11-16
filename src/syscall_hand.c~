@@ -1,4 +1,5 @@
 #include "../include/syscall_hand.h"
+#include "../include/video_handler.h"
 #include "../include/stdio.h"
 #include "../include/io.h"
 #include "../include/defs.h"
@@ -8,7 +9,7 @@
 
 int int_80_handler(int func, int file_desc, int arg1, int arg2){
 	
-	int ans = WRONG_FILE_DESC;	
+	int ans = 0;	
 
 	switch(func){
 
@@ -17,6 +18,9 @@ int int_80_handler(int func, int file_desc, int arg1, int arg2){
 			break;
 		case WRITE:
 			ans = write_io(file_desc, (char *)arg1, arg2);
+			break;
+		case CLEAR_FUNC:
+			video_clear();
 			break;
 		case INFO_IDT:
 			ans = get_idt((IDTR *)arg1);
@@ -29,6 +33,9 @@ int int_80_handler(int func, int file_desc, int arg1, int arg2){
 			break;
 		case GET_SMBIOS:
 			ans = getSMBIOS((char **)arg1);
+			break;
+		case SET_EXCP_FREQ:
+			set_excp_freq(arg1, arg2);
 			break;
 		case EXCEPTION:
 			switch( arg1 ){

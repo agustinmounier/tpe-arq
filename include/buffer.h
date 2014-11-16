@@ -15,4 +15,5 @@ void add_to_buffer(bufferCDT * buffer, char input);
 void clear_buffer(bufferCDT * buffer);
 char buffer_pop(bufferCDT * buffer);
 
+
 #endif

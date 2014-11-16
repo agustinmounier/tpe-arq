@@ -11,11 +11,7 @@
 /* Muestra la imagen de inicio */
 void showSplashScreen();
 
-/* Tiempo de espera */
-
-
-/* Limpia la pantalla */
-void k_clear_screen();
+void wait(int ms);
 
 /* Inicializa la entrada del IDT */
 void setup_IDT_entry (DESCR_INT *item, byte selector, dword offset, byte access,

@@ -12,6 +12,7 @@ static int prev_x = 0;
 static int prev_y = 0;
 
 void video_init(){
+	k_clear_screen();
 
 	cursor_pos = 0;
 	cursor_row = 0;
@@ -63,6 +64,18 @@ void video_string(char * string){
 		video_input(string[i]);
 	
 
+}
+
+void k_clear_screen(){
+	
+	unsigned int i=0;
+	while(i < (80*25*2))
+	{
+		video[i]=' ';
+		i++;
+		video[i]=WHITE_TXT;
+		i++;
+	};
 }
 
 void video_clear(){

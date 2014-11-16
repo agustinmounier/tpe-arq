@@ -2,7 +2,7 @@
 #define _syscall_hand_
 
 
-#define WRONG_FILE_DESC -1
+
 #define READ		0
 #define WRITE		1
 #define CLEAR_FUNC    -10
@@ -14,6 +14,7 @@
 #define DIV_ZERO      -16
 #define BOUNDS        -17
 #define OVERFLOW      -18
+#define SET_EXCP_FREQ -19
 
 int int_80_handler(int func, int file_desc, int arg1, int arg2);
 

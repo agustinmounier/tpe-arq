@@ -12,6 +12,7 @@ void index_out_bounds_hand();
 void triger_bound_excep();
 void set_freq(int excp, int freq);
 void trigger_excp(int excp);
+void set_excp_freq(int excp, int freq);
 void panic();
 
 #endif

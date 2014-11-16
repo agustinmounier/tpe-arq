@@ -78,9 +78,6 @@ int write_to_terminal(char * buffer, int cant){
 			case '\n':
 				video_enter();
 				break;
-			case CLEAR_FUNC:
-				video_clear();
-				return 0;
 			default:
 				video_input(buffer[i]);
 				break;

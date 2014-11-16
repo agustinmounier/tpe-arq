@@ -1,9 +1,6 @@
 #include "../../include/software.h"
 
 void clear(){
-
-	char func = CLEAR_FUNC;
-
-	printf("%c", func);
+	_syscall(CLEAR_FUNC, 0 , 0, 0);
 	
 }

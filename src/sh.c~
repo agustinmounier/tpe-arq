@@ -22,7 +22,7 @@ static char exceptions[3][10] = {"zero", "bounds", "opcode"};
 
 void shell_init(){
 	
-	int bytesRead = 0;
+
 	char shBuffer[SH_BUFFER_SIZE];
 	
 	printf("Welcome user!. \n");
@@ -30,12 +30,14 @@ void shell_init(){
 
 	while(1){
 		
-		bytesRead = read(STDIN, shBuffer, SH_BUFFER_SIZE - 1);/* TODO: ver porq siempre manda cero */
-
+		read(STDIN, shBuffer, SH_BUFFER_SIZE - 1);
+		
 		if(shBuffer[0] != '\n')
 			parse_shBuffer(shBuffer);
-		else if(bytesRead > 0)
+		else{
 			printf("$:");
+			shBuffer[0] = BUFFER_EMPTY;
+		}
 		
 	}
 	
@@ -49,9 +51,9 @@ void parse_shBuffer(char * shBuffer){
 	char comand[3][15];
 	int excp;
 	int freq;
-	while(shBuffer[index] != '\n' && index < SH_BUFFER_SIZE -1){
+	while(shBuffer[index] != '\n'){
 
-		if(shBuffer[index] == '\0')
+		if(shBuffer[index] == '\0' || shBuffer[index] == BUFFER_EMPTY)
 			return;
 		
 		index++;
@@ -77,7 +79,7 @@ void parse_shBuffer(char * shBuffer){
 	}else
 		printf("Comand not found.\n");
 	
-
+	
 	shBuffer[index] = BUFFER_EMPTY;
 	if(comandIndex != 0)
 		printf("$:");
@@ -101,7 +103,7 @@ int getComand(char * query, char  comand[3][15]){
 			j++;
 		}
 
-		if(i > 3)
+		if(i > 2 || j > 14)
 			return -1;
 	
 		h++;
@@ -160,20 +162,20 @@ void shell_display_more(){
 }
 void help(){
 
-	printf("Available comands:\n");
-	printf("infoidt                         Description: shows the content of the IDT.\n");
+	printf("COMAND                                DESCRIPTION\n");
+	printf("infoidt                               Shows the content of the IDT.\n");
 
-	printf("biosinfo                        Description: shows the information about\n");
-	printf("                                the BIOS.\n");
+	printf("biosinfo                              Shows information about\n");
+	printf("                                      the BIOS.\n");
 
-	printf("sounds                          Description: Emits different sounds\n");
-	printf("                                through the PC speaker.\n");
+	printf("sounds                                Emits different sounds\n");
+	printf("                                      through the PC speaker.\n");
 
-	printf("exception [exception-name]      Description: Triggers exception-name.\n");
+	printf("exception [exception-name]            Triggers exception-name.\n");
 
-	printf("setfreq [exception-name] [freq] Description: sets the frequency of the\n");
-	printf("                                sound emited by exception-name to freq.\n");
-	printf("Available exceptions: zero, bounds, opcode.\n");
+	printf("setfreq [exception-name] [freq]       Sets the frequency of the\n");
+	printf("                                      sound emited by exception-name to freq.\n");
+	printf("Available exception-names: zero, bounds, opcode.\n");
 
 
 

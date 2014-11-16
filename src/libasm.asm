@@ -25,6 +25,7 @@ EXTERN	invalid_opcode_hand
 EXTERN  index_out_bounds_hand
 EXTERN 	int_74_handler
 EXTERN 	panic
+EXTERN  kmain
 
 
 SECTION .text
@@ -110,7 +111,8 @@ _int_00_hand:
 	call div_by_zero_hand
 
 	popa
-	call panic
+	call kmain
+	
 	iret
 
 
@@ -142,7 +144,7 @@ _int_06_hand:
 		
 	popa
 	
-	call panic
+	call kmain
 	iret
 
 
@@ -169,7 +171,7 @@ _int_05_hand:
 	call index_out_bounds_hand
 	
 	popa
-	call panic
+	call kmain
 
 	iret
 	
@@ -236,7 +238,7 @@ _int_80_hand:
 	
 	call int_80_handler
 	
-	pop 	eax
+
 	pop 	ebx
 	pop 	ecx
 	pop 	edx

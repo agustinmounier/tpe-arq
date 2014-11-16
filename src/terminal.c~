@@ -8,7 +8,6 @@
 static bufferCDT * kBuffer;
 static char keyboard_buffer[BUFFER_SIZE];
 static int shBufferIndex = 0;
-static int stop_read = 0;
 
 void terminal_init(){
 	buffer_init(kBuffer, keyboard_buffer, BUFFER_SIZE);
@@ -23,8 +22,6 @@ void terminal_input(char input){
 		video_backspace();
 	}else if(input == '\n'){
 		video_enter();
-		printf("%s\n", kBuffer);
-		stop_read = 0;
 	}else{
 		video_input(input);
 	}	
@@ -36,11 +33,11 @@ int read_from_terminal(char * shBuffer, int cant){
 	
 	while(cantRead < cant){
 	
-		char input = buffer_pop(kBuffer);		
+		char input = buffer_pop(kBuffer);
+		
 		
 		if(input == -1){ /* keyboard buffer is empty */
-			stop_read = 1;
-			while(stop_read){}
+			return cantRead;
 		}else if(input == '\n'){
 			shBuffer[shBufferIndex] = input;
 			shBufferIndex = 0;

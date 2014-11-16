@@ -1,5 +1,5 @@
 #include "../include/pc_speaker.h"
-#include "../include/timertick_handler.h"
+#include "../include/kc.h"
 
 /* Las funciones set_speaker_frec, play_speaker y stop_speaker
  * estan basadas en el codigo de ejemplo de http://wiki.osdev.org/PC_Speaker */
@@ -40,11 +40,4 @@ void stop_speaker(){
 
 }
 
-void wait(int ms){
-	
-	int end = getTicks() + (ms/55);
-	_Sti();
-	while (getTicks() < end){};
-	_Cli();
 
-}

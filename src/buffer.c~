@@ -19,7 +19,7 @@ void add_to_buffer(bufferCDT * buffer, char input){
 	buffer->head = (buffer->head + 1)%buffer->size;
 }
 
-void clean_buffer(bufferCDT * buffer){
+void clear_buffer(bufferCDT * buffer){
 	buffer->tail = buffer->head;
 }
 
@@ -30,4 +30,14 @@ char buffer_pop(bufferCDT * buffer){
 		return ans;
 	}
 	return -1;
+}
+
+void buffer_remove_last(bufferCDT * buffer){
+	if(buffer->head != buffer->tail){
+		if(buffer->head == 0)
+			buffer->head = buffer->size - 1;
+		else
+			buffer->head = buffer->head - 1;
+
+	}
 }

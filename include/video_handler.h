@@ -14,4 +14,5 @@ void video_update_cursor(int cursor_pos);
 void video_screen_up();
 void display_more();
 void update_mouse(int x, int y, int color);
+void k_clear_screen();
 #endif
